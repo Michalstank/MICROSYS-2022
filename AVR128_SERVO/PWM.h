@@ -6,9 +6,15 @@
 #include <stdio.h>
 
 uint32_t dutyCycle = 0;
-#define PERIOD_EXAMPLE_VALUE (0xFFFFF)
+uint32_t rate = 0x0001;
 
 void PORT_init(void);
 void TCA1_init(void);
+void PWM_controlInit(void);
+
+void PWM_rateUpdate(void);
+void PWM_dutyCycleUpdate(bool val);
+void PWM_update(uint32_t val);
+
 
 #endif /* PWM_H_ */
