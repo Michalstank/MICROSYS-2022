@@ -10,7 +10,7 @@ void TCA1_init(void)
 	TCA1.SINGLE.CTRLB = TCA_SINGLE_CMP2EN_bm | TCA_SINGLE_WGMODE_SINGLESLOPE_gc ; /*PWM - Single slope*/
 	
 	TCA1.SINGLE.PER = 0x9C40;							// 50hz frequency for pwm to match servo assuming we have 16Mh as clock speed
-	TCA1.SINGLE.CMP2 = 0x0000;							/* set PWM to low*/
+	TCA1.SINGLE.CMP2 = 0x186A;							/* set PWM to Medium*/
 	
 	TCA1.SINGLE.CTRLA = TCA_SINGLE_CLKSEL_DIV4_gc		/* divide Processor Clock by 4 so we can get 50hz within 4bits */
 	| TCA_SINGLE_ENABLE_bm;								/* start timer */
@@ -33,7 +33,7 @@ void PWM_controlInit(){
 
 void PWM_rateUpdate(){
 	//change hastighet vi increaser/decreaser dutycycle på.
-	if(rate < 0x0040){
+	if(rate < 0x0100){
 		rate *= 2;
 	} else {
 		rate =0x0001;
@@ -46,21 +46,21 @@ void PWM_dutyCycleUpdate(bool val){
 		//rotates servo to left
 		dutyCycle -= rate;
 		//if dutyCycle falls under 0 revert it back to 0;
-		if(dutyCycle < 0x0000){
-			dutyCycle = 0x0000;
+		if(dutyCycle < 0x07D0){
+			dutyCycle = 0x07D0;
 		}
 	} else {
 		//rotates servo to right
 		dutyCycle += rate;
 		//if DutyCycle becomes larger than max value revert it back to max value 
-		if(dutyCycle > 0x9C40){
-			dutyCycle = 0x9C40;
+		if(dutyCycle > 0x2904){
+			dutyCycle = 0x2904;
 		}
 	}
 }
 
 void PWM_update(int val){
-	if(val <= 0x9C40 && val >= 0x0000){
+	if(val <= 0x2904 && val >= 0x07D0){
 		TCA1.SINGLE.CMP2 = val;	//set new Value for Duty-cycle
 	}				
 }

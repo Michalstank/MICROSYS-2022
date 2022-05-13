@@ -44,12 +44,10 @@
 // Inge styring fra eksterne kilder
 // menuCommands bør fylles ut, og main bør bli mindre
 // Ingen måling av strøm, kan også bruke dette for å kompansere for ting i servoen
-// Det er ferdigsatte grader servoen kan stilles til, man kan ikke velge fritt, burde gjøre noe
-// Det er ikke mulig å justere hastigheten til servoen
 
 //Ting som må Fikses:
 //twi_write_adress() funksjon | Infinite Loop
-//
+//Implement rest of PWM Functions
 //
 //
 //
@@ -145,10 +143,22 @@ int main (void) {
 // Hoved-loopen
 	while (1) {
 		
-		for(int i = 0x0000; i < 0x9C40; i+=0x0010){
-			TCA1.SINGLE.CMP2 = i;
-			_delay_ms(10);
+		//PWM/Servo Control Buttons
+		if(/*button one pressed*/){
+			PWM_dutyCycleUpdate(false);
+			PWM_update(dutyCycle);
 		}
+		
+		if(/*Button two Pressed*/){
+			PWM_dutyCycleUpdate(true);
+			PWM_update(dutyCycle);
+		}
+		
+		if(/*Button tree Pressed*/){
+			PWM_rateUpdate();
+		}
+		
+		
 		
 		// BEgynner å sjekke RxBufferet om interpret == 1
 		if (interpret) {
