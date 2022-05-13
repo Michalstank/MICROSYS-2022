@@ -45,7 +45,7 @@ extern volatile uint8_t degrees;
 
 // Prototypar
 void initScreen(void);
-void menu_printer(char *menuSelect);
+void menu_printer(char* menuSelect);
 uint8_t checkForAlerts(uint8_t);
 
 

@@ -19,23 +19,23 @@ void TWI_init(void){
 	TWI0.MCTRLA |= 1 << 0;
 }
 
-bool twi_write_adress(uint8_t adress)
-{
-	// Adresse og write
-	TWI0.MADDR = adress << 1;
-	// Setter opp en eier for TWI bussen (master)
-	while((TWI0.MSTATUS & 0x02) != 0x02);
-	
-	while(!WRITE_FLAG);
-	
-	if (RECEIVE_ACK){
-		
-		send_stop();
-		return false;
-	}
-	
-	return true;
-}
+// bool twi_write_adress(uint8_t adress)
+// {
+// 	// Adresse og write
+// 	TWI0.MADDR = adress << 1;
+// 	// Setter opp en eier for TWI bussen (master)
+// 	while((TWI0.MSTATUS & 0x02) != 0x02);
+// 	
+// 	while(!WRITE_FLAG);
+// 	
+// 	if (RECEIVE_ACK){
+// 		
+// 		send_stop();
+// 		return false;
+// 	}
+// 	
+// 	return true;
+// }
 
 void send_stop(void){
 	

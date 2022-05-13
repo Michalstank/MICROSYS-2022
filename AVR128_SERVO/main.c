@@ -47,6 +47,12 @@
 // Det er ferdigsatte grader servoen kan stilles til, man kan ikke velge fritt, burde gjøre noe
 // Det er ikke mulig å justere hastigheten til servoen
 
+//Ting som må Fikses:
+//twi_write_adress() funksjon | Infinite Loop
+//
+//
+//
+//
 
 
 #define F_CPU 16000000UL
@@ -66,6 +72,8 @@
 #include "LCD_I2C.h"
 #include "twi_master.h"
 #include "menuCommands.h"
+#include "PWM.h"
+
 
 // Prototypes
 void startupRoutine(void);
@@ -112,7 +120,7 @@ int main (void) {
 	
 // Initialiserer alt som trenger det
 
-	i2c_lcd_init();
+	//i2c_lcd_init();
 	PORT_init();
 	TCA1_init();
 	_delay_ms(100);
@@ -136,6 +144,11 @@ int main (void) {
 	
 // Hoved-loopen
 	while (1) {
+		
+		for(int i = 0x0000; i < 0x9C40; i+=0x0010){
+			TCA1.SINGLE.CMP2 = i;
+			_delay_ms(10);
+		}
 		
 		// BEgynner å sjekke RxBufferet om interpret == 1
 		if (interpret) {

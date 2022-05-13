@@ -43,7 +43,7 @@ void warningMenu(void) {
 }
 
 
-void menu_printer(char *menuSelect) {
+void menu_printer(char* menuSelect) {
 	/*initScreen();*/
 
 	// ----------- Hovedmeny grafikk -----------

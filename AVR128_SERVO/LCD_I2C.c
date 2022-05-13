@@ -7,15 +7,15 @@ void i2c_lcd_init(void)
 	_delay_ms(40);
 	
 	TWI_init();
-	if (twi_write_adress(ADRESS))
-	{
-		I2C_LCD_cmd(0x20);
-		I2C_LCD_cmd(0x28);
-		I2C_LCD_cmd(0x0C);
-		I2C_LCD_cmd(0x06);
-		I2C_LCD_cmd(0x01);
-		send_stop();
-	}
+// 	if (twi_write_adress(ADRESS))
+// 	{
+// 		I2C_LCD_cmd(0x20);
+// 		I2C_LCD_cmd(0x28);
+// 		I2C_LCD_cmd(0x0C);
+// 		I2C_LCD_cmd(0x06);
+// 		I2C_LCD_cmd(0x01);
+// 		send_stop();
+// 	}
 }
 
 void I2C_LCD_cmd(unsigned char cmd)
@@ -40,30 +40,30 @@ void i2c_lcd_data(unsigned char cmd)
 
 void i2c_lcd_send_string(unsigned char str[]){
 	
-	if (twi_write_adress(ADRESS)){
-		while(*str){
-			i2c_lcd_data(*str++);
-		}
-		send_stop();
-	}
+// 	if (twi_write_adress(ADRESS)){
+// 		while(*str){
+// 			i2c_lcd_data(*str++);
+// 		}
+// 		send_stop();
+// 	}
 }
 
 void i2c_set_cursor(uint8_t line, uint8_t columns){
-	
-	if (twi_write_adress(ADRESS)){
-		
-		if (line == 2){
-
-			I2C_LCD_cmd(0xBF+columns);
-		}
-		else{
-			
-			I2C_LCD_cmd(0x7F+columns);
-		}
-		
-		send_stop();
-	}
-	
+// 	
+// 	if (twi_write_adress(ADRESS)){
+// 		
+// 		if (line == 2){
+// 
+// 			I2C_LCD_cmd(0xBF+columns);
+// 		}
+// 		else{
+// 			
+// 			I2C_LCD_cmd(0x7F+columns);
+// 		}
+// 		
+// 		send_stop();
+// 	}
+// 	
 }
 void i2c_print_float(float f){
 	
@@ -76,10 +76,10 @@ void i2c_print_float(float f){
 
 void i2c_send_command(uint8_t command){
 	
-	if (twi_write_adress(ADRESS))
-	{
-		I2C_LCD_cmd(command);
-		send_stop();
-	}
+// 	if (twi_write_adress(ADRESS))
+// 	{
+// 		I2C_LCD_cmd(command);
+// 		send_stop();
+// 	}
 
 }

@@ -1,12 +1,15 @@
 #include "PWM.h"
 
+dutyCycle = 0x0000;
+rate = 0x0001;
+
 void TCA1_init(void)
 {
 	PORTMUX.TCAROUTEA = PORTMUX_TCA10_bm;				/* set waveform output on PORT C */
 
 	TCA1.SINGLE.CTRLB = TCA_SINGLE_CMP2EN_bm | TCA_SINGLE_WGMODE_SINGLESLOPE_gc ; /*PWM - Single slope*/
 	
-	TCA1.SINGLE.PER = 0x9C40							// 50hz frequency for pwm to match servo assuming we have 16Mh as clock speed
+	TCA1.SINGLE.PER = 0x9C40;							// 50hz frequency for pwm to match servo assuming we have 16Mh as clock speed
 	TCA1.SINGLE.CMP2 = 0x0000;							/* set PWM to low*/
 	
 	TCA1.SINGLE.CTRLA = TCA_SINGLE_CLKSEL_DIV4_gc		/* divide Processor Clock by 4 so we can get 50hz within 4bits */
@@ -56,7 +59,7 @@ void PWM_dutyCycleUpdate(bool val){
 	}
 }
 
-void PWM_update(uint32_t val){
+void PWM_update(int val){
 	if(val <= 0x9C40 && val >= 0x0000){
 		TCA1.SINGLE.CMP2 = val;	//set new Value for Duty-cycle
 	}				
