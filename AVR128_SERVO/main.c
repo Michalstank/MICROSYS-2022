@@ -38,19 +38,14 @@
 
 
 // Ting som bør gjøres:
-// Akkurat nå har vi ingen måte å køre automatisk på
+// Akkurat nå har vi ingen måte å køre automatisk på KINDA
 // - henter inn temperatur fra AVR'en. kan bruke dette
 // LCD skjermen viser svært lite
-// Inge styring fra eksterne kilder
 // menuCommands bør fylles ut, og main bør bli mindre
 // Ingen måling av strøm, kan også bruke dette for å kompansere for ting i servoen
 
 //Ting som må Fikses:
 //twi_write_adress() funksjon | Infinite Loop
-//Implement rest of PWM Functions
-//
-//
-//
 
 
 #define F_CPU 16000000UL
@@ -88,6 +83,10 @@ volatile uint8_t degrees = 0;
 volatile uint8_t controllState = 0;
 volatile uint8_t rpmState = 0;
 
+volatile int16_t PWM_lhs;
+volatile int16_t PWM_rhs;
+volatile int16_t PWM_rate;
+
 // Variabler brukt for å fortelle noen om tilstanden til servo/ kontroller
 uint16_t LCD_toggle = 0;
 uint8_t angle_lock = 1;
@@ -118,6 +117,8 @@ int main (void) {
 	
 // Initialiserer alt som trenger det
 
+
+
 	//i2c_lcd_init();
 	PORT_init();
 	TCA1_init();
@@ -133,6 +134,8 @@ int main (void) {
 	menu_printer("mainMenu");
 	printf("> ");
 	
+	PWM_buttonSetUp();
+	
 // Noen verdier for temperarutemålingen. Kan egentlig fyttes ut fra main
 	uint32_t temp = 0;
 	uint16_t offset = SIGROW.TEMPSENSE1;
@@ -143,19 +146,21 @@ int main (void) {
 // Hoved-loopen
 	while (1) {
 		
-		//PWM/Servo Control Buttons
-		if(/*button one pressed*/){
+		if(!(PORTE.IN & (PIN1_bm))){
 			PWM_dutyCycleUpdate(false);
 			PWM_update(dutyCycle);
+			_delay_ms(10);
 		}
 		
-		if(/*Button two Pressed*/){
+		if(!(PORTE.IN & (PIN2_bm))){
 			PWM_dutyCycleUpdate(true);
 			PWM_update(dutyCycle);
+			_delay_ms(10);
 		}
 		
-		if(/*Button tree Pressed*/){
+		if(!(PORTE.IN & (PIN3_bm))){
 			PWM_rateUpdate();
+			_delay_ms(10);
 		}
 		
 		

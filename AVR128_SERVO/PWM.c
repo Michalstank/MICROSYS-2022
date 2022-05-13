@@ -1,7 +1,7 @@
 #include "PWM.h"
 
-dutyCycle = 0x0000;
-rate = 0x0001;
+dutyCycle = 0x186A;
+rate = 0x0010;
 
 void TCA1_init(void)
 {
@@ -22,16 +22,22 @@ void PORT_init(void)
 	PORTC.DIRSET |= PIN6_bm;							/* set pin 6 of PORT C as output */
 }
 
-void PWM_controlInit(){
+void PWM_buttonSetUp(void){
 	
 	//define 3 inputs, 1/2 for servo Direction, 3 for rate change
 	
-	PORTB.OUT = 0x00; //disable output
+	//PIN SETUP: DISABLE PULLUP RESISITOR, INTERRUPT, INTERNAL BUFFER
+	PORTE.DIRCLR = PIN1_bm;
+	PORTE.DIRCLR = PIN2_bm;
+	PORTE.DIRCLR = PIN3_bm;
 	
-	PORTB.DIRSET = 0x00; //set port as input
+// 	PORTE.PIN1CTRL |= PORT_PULLUPEN_bm;
+// 	PORTE.PIN2CTRL |= PORT_PULLUPEN_bm;
+// 	PORTE.PIN3CTRL |= PORT_PULLUPEN_bm;
+// 	
 }
 
-void PWM_rateUpdate(){
+void PWM_rateUpdate(void){
 	//change hastighet vi increaser/decreaser dutycycle på.
 	if(rate < 0x0100){
 		rate *= 2;
